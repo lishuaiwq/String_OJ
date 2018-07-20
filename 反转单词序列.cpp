@@ -5,33 +5,30 @@
 
 算法：
 
-借助栈的特性去实现，以单词为单位将其压入栈，然后再从栈中弹出就可以了，注意在统计整个单词的时候，不仅仅要str[i] != ' '而且还有i<size因为走到最后没有str[i] == " ",会产生越界
-代码：
+一个单词一个单词拼接，举例子
+student.a am I
 
-class Solution {
-public:
-	string ReverseSentence(string str) {
-		string src;
-		int i = 0;
-		int size = str.size();//不包含/0
-		stack<string> s;
-		while (i<size)
-		{
-			string dest;
-			while (i<size&&str[i] != ' ')
-			{
-				dest.push_back(str[i]);
-				i++;
-			}
-			dest.push_back(str[i++]);
-			s.push(dest);
 
-		}
-		while (!s.empty())
+ret = ' 'student;
+ret = ' 'a' 'student;
+
+string ReverseSentence(string str) {
+	int size = str.size();
+	string ret = "";
+	string src = "";
+	for (int i = 0; i<size; i++)
+	{
+		if (str[i] == ' ')//一个单词遍历完了
 		{
-			src += s.top();
-			s.pop();
+			ret = ' ' + src + ret;
+			src = "";
 		}
-		return src;
+		else
+		{
+			src += str[i];
+		}
 	}
-};
+	if (str.size())
+		ret = src + ret;
+	return ret;
+}
